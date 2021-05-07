@@ -4,7 +4,8 @@
 #include <QDialog>
 #include <QPainter>
 #include <QMouseEvent>
-
+#include <QLabel>
+#include <cstdlib>
 namespace Ui {
 class Coast;
 }
@@ -21,6 +22,8 @@ protected:
     void mousePressEvent(QMouseEvent *);
     void mouseMoveEvent(QMouseEvent *);
     void mouseReleaseEvent(QMouseEvent *);
+    bool check(QPoint);
+    bool checkPoint(QPoint);
 private slots:
 
     void on_River_clicked();
@@ -63,10 +66,13 @@ private slots:
 
     void on_Eraser_clicked();
 
+    void on_Generate_clicked();
+
 private:
     Ui::Coast *ui;
     QColor *color;
     QPixmap pix;
+    QLabel output_window;
     QPoint lastPoint;
     QPoint endPoint;
     QPen *pen, *eraser;

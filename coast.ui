@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>985</width>
+    <width>1109</width>
     <height>778</height>
    </rect>
   </property>
@@ -237,7 +237,7 @@
   <widget class="QPushButton" name="Pen">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>270</x>
      <y>530</y>
      <width>119</width>
      <height>36</height>
@@ -250,7 +250,7 @@
   <widget class="QPushButton" name="Eraser">
    <property name="geometry">
     <rect>
-     <x>220</x>
+     <x>570</x>
      <y>530</y>
      <width>119</width>
      <height>36</height>
@@ -258,6 +258,19 @@
    </property>
    <property name="text">
     <string>Eraser</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="Generate">
+   <property name="geometry">
+    <rect>
+     <x>930</x>
+     <y>240</y>
+     <width>121</width>
+     <height>221</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Generate</string>
    </property>
   </widget>
  </widget>
