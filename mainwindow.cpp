@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->move(400, 400);
 }
 
 MainWindow::~MainWindow()
@@ -19,3 +20,17 @@ void MainWindow::on_CoastEntry_clicked()
     Coast temp;
     temp.exec();
 }
+
+void MainWindow::on_Country_clicked()
+{
+    Country temp;
+    temp.exec();
+}
+
+
+void MainWindow::on_City_clicked()
+{
+    City temp;
+    temp.exec();
+}
+

@@ -1,9 +1,9 @@
-#include "coast.h"
-#include "ui_coast.h"
+#include "country.h"
+#include "ui_country.h"
 
-Coast::Coast(QWidget *parent) :
+Country::Country(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::Coast)
+    ui(new Ui::Country)
 {
     ui->setupUi(this);
     selectItem = 1;
@@ -25,7 +25,7 @@ Coast::Coast(QWidget *parent) :
     output_window.move(dx2, dy2);
 }
 
-Coast::~Coast()
+Country::~Country()
 {
     delete color;
     delete pen;
@@ -33,7 +33,8 @@ Coast::~Coast()
     delete ui;
 }
 
-void Coast::paintEvent(QPaintEvent *)
+
+void Country::paintEvent(QPaintEvent *)
 {
       QPainter pp(&pix);    // 根据鼠标指针前后两个位置就行绘制直线
       QPen *cur;
@@ -51,35 +52,21 @@ void Coast::paintEvent(QPaintEvent *)
 }
 
 
-void Coast::on_Generate_clicked()
-{
-    if(pix.save("./temp.jpg", "jpg", 100)!=1)exit(0);
-    system("./run/run.exe coast.h5 temp.jpg output.jpg");
-    QPixmap *output = new QPixmap();
-    if(output->load("output.jpg", "jpg")!=1)exit(0);
-    output_window.setPixmap(*output);
-    output_window.setWindowFlags(output_window.windowFlags() | Qt::WindowStaysOnTopHint);
-    output_window.setParent(this);
-    output_window.show();
-    delete output;
-    lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
-}
-
-bool Coast::checkPoint(QPoint cur){
+bool Country::checkPoint(QPoint cur){
     int x = cur.rx(), y = cur.ry();
     if(x >= 0 && x <= 400 && y >= 0 && y <= 400)
         return true;
     return false;
 }
 
-bool Coast::check(QPoint cur){
+bool Country::check(QPoint cur){
     int x = cur.rx(), y = cur.ry();
     if(x >= dx1 && x <= 400 + dx1 && y >= dy1 && y <= dy1 + 400)
         return true;
     return false;
 }
 
-void Coast::mouseMoveEvent(QMouseEvent *event)
+void Country::mouseMoveEvent(QMouseEvent *event)
 {
 
     if(event->buttons()&Qt::LeftButton&&check(event->pos())) //鼠标左键按下的同时移动鼠标
@@ -92,7 +79,7 @@ void Coast::mouseMoveEvent(QMouseEvent *event)
 }
 
 
-void Coast::mousePressEvent(QMouseEvent *event)
+void Country::mousePressEvent(QMouseEvent *event)
 {
       if(event->button()==Qt::LeftButton&&check(event->pos())){//鼠标左键按下
           lastPoint = event->pos();
@@ -101,7 +88,7 @@ void Coast::mousePressEvent(QMouseEvent *event)
       }
 }
 
-void Coast::mouseReleaseEvent(QMouseEvent *event)
+void Country::mouseReleaseEvent(QMouseEvent *event)
 {
        if(event->button() == Qt::LeftButton&&check(event->pos())) //鼠标左键释放
        {
@@ -112,134 +99,185 @@ void Coast::mouseReleaseEvent(QMouseEvent *event)
        }
 }
 
-void Coast::on_River_clicked()
+void Country::on_Generate_clicked()
 {
-    delete(color);
-    color = new QColor(0, 0, 255);
+    if(pix.save("./temp.jpg", "jpg", 100)!=1)exit(0);
+    system("./run/run.exe country.h5 temp.jpg output.jpg");
+    QPixmap *output = new QPixmap();
+    if(output->load("output.jpg", "jpg")!=1)exit(0);
+    output_window.setPixmap(*output);
+    output_window.setWindowFlags(output_window.windowFlags() | Qt::WindowStaysOnTopHint);
+    output_window.setParent(this);
+    output_window.show();
+    delete output;
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Road_clicked()
+
+void Country::on_Width2_clicked()
 {
-    delete(color);
-    color = new QColor(125, 51, 36);
+    width = 2;
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Rock_clicked()
+
+void Country::on_Width5_clicked()
 {
-    delete(color);
-    color = new QColor(250, 240, 230);
+    width = 5;
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Sand_clicked()
+
+void Country::on_Width10_clicked()
 {
-    delete(color);
-    color = new QColor(245, 222, 179);
+    width = 10;
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Sea_clicked()
+
+void Country::on_Width20_clicked()
 {
-    delete(color);
-    color = new QColor(25, 25, 112);
+    width = 20;
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Sky_clicked()
+
+void Country::on_Width40_clicked()
 {
-    delete(color);
-    color = new QColor(135, 206, 235);
+    width = 40;
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Sun_clicked()
+
+void Country::on_Width80_clicked()
 {
-    delete(color);
-    color = new QColor(227, 23, 13);
+    width = 80;
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Tree_clicked()
+
+void Country::on_Pen_clicked()
 {
-    delete(color);
-    color = new QColor(50, 205, 50);
+    selectItem = 1;
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Boat_clicked()
+
+void Country::on_Eraser_clicked()
 {
-    delete(color);
-    color = new QColor(128, 42, 42);
+    selectItem = 0;
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Building_clicked()
+
+void Country::on_Building_clicked()
 {
     delete(color);
     color = new QColor(128, 128, 105);
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Mountain_clicked()
+
+void Country::on_Desert_clicked()
+{
+    delete(color);
+    color = new QColor(255, 215, 0);
+    lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
+}
+
+
+void Country::on_Field_clicked()
+{
+    delete(color);
+    color = new QColor(127, 255, 212);
+    lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
+}
+
+
+void Country::on_Grass_clicked()
+{
+    delete(color);
+    color = new QColor(0, 255, 0);
+    lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
+}
+
+
+void Country::on_Mountain_clicked()
 {
     delete(color);
     color = new QColor(176, 244, 230);
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Plant_clicked()
+
+void Country::on_Sea_clicked()
+{
+    delete(color);
+    color = new QColor(25, 25, 112);
+    lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
+}
+
+
+void Country::on_Sun_clicked()
+{
+    delete(color);
+    color = new QColor(227, 23, 13);
+    lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
+}
+
+
+void Country::on_Plant_clicked()
 {
     delete(color);
     color = new QColor(0, 201, 87);
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Width2_clicked()
+
+void Country::on_River_clicked()
 {
-    width = 2;
+    delete(color);
+    color = new QColor(0, 0, 255);
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Width5_clicked()
+
+void Country::on_Road_clicked()
 {
-    width = 5;
+    delete(color);
+    color = new QColor(125, 51, 36);
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Width10_clicked()
+
+void Country::on_Rock_clicked()
 {
-    width = 10;
+    delete(color);
+    color = new QColor(250, 240, 230);
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Width20_clicked()
+
+void Country::on_Sand_clicked()
 {
-    width = 20;
+    delete(color);
+    color = new QColor(245, 222, 179);
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Width40_clicked()
+
+void Country::on_Sky_clicked()
 {
-    width = 40;
+    delete(color);
+    color = new QColor(135, 206, 235);
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Width80_clicked()
+
+void Country::on_Tree_clicked()
 {
-    width = 80;
+    delete(color);
+    color = new QColor(50, 205, 50);
     lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
 }
 
-void Coast::on_Pen_clicked()
-{
-    selectItem = 1;
-    lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
-}
-
-void Coast::on_Eraser_clicked()
-{
-    selectItem = 0;
-    lastPoint =  QPoint(-1, -1);  endPoint =  QPoint(-1, -1);
-}

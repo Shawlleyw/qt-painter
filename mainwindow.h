@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include "coast.h"
+#include "country.h"
+#include "city.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,6 +20,10 @@ public:
 
 private slots:
     void on_CoastEntry_clicked();
+
+    void on_Country_clicked();
+
+    void on_City_clicked();
 
 private:
     Ui::MainWindow *ui;
